@@ -146,16 +146,27 @@ export function useGame() {
         setLastTurn({ delta: result.score_delta, injectionBlocked: result.injection_blocked });
         if (result.audio_base64) setAudio(result.audio_base64);
       } catch (caught) {
-        setError(caught.message);
         // The turn was refused, so drop the optimistic line rather than
         // leaving a message on screen the server never scored.
         setTranscript((previous) => previous.slice(0, -1));
+        if (caught.status === 404) {
+          // The server no longer holds this run (its session store was
+          // cleared), so every further turn would 404 as well.
+          try {
+            await startFresh();
+            setError('That run no longer exists on the server, so a new one has started.');
+          } catch (restartError) {
+            setError(restartError.message);
+          }
+        } else {
+          setError(caught.message);
+        }
       } finally {
         inFlight.current = false;
         setIsThinking(false);
       }
     },
-    [game.sessionId, game.status],
+    [game.sessionId, game.status, startFresh],
   );
 
   useEffect(() => {

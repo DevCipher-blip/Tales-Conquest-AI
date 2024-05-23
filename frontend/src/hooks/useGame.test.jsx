@@ -138,6 +138,18 @@ describe('useGame', () => {
     expect(result.current.transcript).toHaveLength(0);
   });
 
+  it('starts over when the server has lost the run', async () => {
+    const { result } = await boot();
+    routes['POST turn'] = respond({ detail: 'no such session' }, 404);
+    routes['POST /api/sessions'] = respond({ ...SESSION, session_id: 'sess-replaced1' }, 201);
+    await act(() => result.current.say('Evening mate'));
+
+    expect(result.current.game.sessionId).toBe('sess-replaced1');
+    expect(result.current.transcript).toHaveLength(0);
+    expect(result.current.error).toMatch(/new one has started/);
+    expect(window.localStorage.getItem(SESSION_STORAGE_KEY)).toBe('sess-replaced1');
+  });
+
   it('fetches the debrief once the run is over', async () => {
     routes['POST turn'] = respond(turnResult({ status: STATUS.TURNS_EXHAUSTED }));
     routes['GET debrief'] = respond({ turns: [{ index: 1, score_delta: 6, reasoning: 'ok' }] });
