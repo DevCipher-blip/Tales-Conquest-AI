@@ -9,7 +9,7 @@ approach.
 from __future__ import annotations
 
 from .injection import BEGIN_MARKER, END_MARKER
-from .rules import MAX_TURN_DELTA, MAX_TURNS, MIN_TURN_DELTA, Mood
+from .rules import INFLUENCE_THRESHOLD, MAX_TURN_DELTA, MAX_TURNS, MIN_TURN_DELTA, Mood
 
 DOORMAN_BACKSTORY = """
 === DOORMAN PROFILE: MARCUS "THE GATEKEEPER" THOMPSON ===
@@ -150,7 +150,7 @@ def build_judge_prompt(history: str, fenced_message: str) -> str:
         fenced_message=fenced_message,
         min_delta=MIN_TURN_DELTA,
         max_delta=MAX_TURN_DELTA,
-        threshold=100,
+        threshold=INFLUENCE_THRESHOLD,
         max_turns=MAX_TURNS,
     )
 

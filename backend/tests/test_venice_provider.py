@@ -10,7 +10,8 @@ import pytest
 import requests
 
 from app.config import Settings
-from app.game.rules import MAX_TURN_DELTA, MIN_TURN_DELTA, GameStatus, Mood
+from app.game import prompts
+from app.game.rules import MAX_TURN_DELTA, MAX_TURNS, MIN_TURN_DELTA, GameStatus, Mood
 from app.providers.base import (
     DoormanContext,
     DoormanUnavailable,
@@ -154,6 +155,12 @@ def test_the_judge_prompt_fences_the_player_text():
     prompt = session.calls[0]["json"]["messages"][0]["content"]
     assert "UNTRUSTED DATA" in prompt
     assert "<<<FENCED>>>" in prompt
+
+
+def test_the_judge_prompt_states_the_rulebook_target(monkeypatch):
+    monkeypatch.setattr(prompts, "INFLUENCE_THRESHOLD", 80)
+    rendered = prompts.build_judge_prompt("", "<<<FENCED>>>")
+    assert f"reach 80 influence inside {MAX_TURNS}" in rendered
 
 
 def test_a_network_failure_is_a_judge_outage():
