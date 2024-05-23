@@ -92,7 +92,10 @@ class GameEngine:
         if not clean:
             raise EmptyMessage("message cannot be empty")
 
-        verdict = self._score(session, clean)
+        # Screen the message as typed. Sanitising strips forged fence markers,
+        # so scanning the cleaned text could never see that attack.
+        screening = injection.scan(injection.normalise(message))
+        verdict = self._score(session, clean, screening)
         session.cumulative_score = apply_delta(session.cumulative_score, verdict.score)
         session.turns_used += 1
         session.status = resolve_status(session.cumulative_score, session.turns_used)
@@ -117,17 +120,16 @@ class GameEngine:
 
     # -- internals --------------------------------------------------------
 
-    def _score(self, session: Session, message: str) -> Verdict:
+    def _score(self, session: Session, message: str, screening: injection.InjectionVerdict) -> Verdict:
         """Produce the verdict for one message.
 
         A detected injection attempt never reaches the provider: the engine
         applies a fixed penalty itself. That is the difference between telling
         a model to resist and not giving it the chance to fold.
         """
-        scan = injection.scan(message)
-        if scan.detected:
-            logger.info("injection attempt on session %s: %s", session.session_id, scan.patterns)
-            return Verdict(score=INJECTION_PENALTY, reasoning=scan.summary, tactic="injection")
+        if screening.detected:
+            logger.info("injection attempt on session %s: %s", session.session_id, screening.patterns)
+            return Verdict(score=INJECTION_PENALTY, reasoning=screening.summary, tactic="injection")
 
         context = JudgeContext(
             history=self._history_text(session),

@@ -108,10 +108,14 @@ def scan(message: str) -> InjectionVerdict:
     return InjectionVerdict(detected=bool(hits), patterns=hits)
 
 
+def normalise(message: str) -> str:
+    """Map curly quotes and dashes onto the straight forms the patterns use."""
+    return (message or "").translate(_SMART_PUNCTUATION)
+
+
 def sanitise(message: str) -> str:
     """Normalise punctuation, strip forged fence markers, collapse padding."""
-    normalised = (message or "").translate(_SMART_PUNCTUATION)
-    without_markers = _MARKER_LOOKALIKE.sub(" ", normalised)
+    without_markers = _MARKER_LOOKALIKE.sub(" ", normalise(message))
     return re.sub(r"[ \t]{3,}", "  ", without_markers).strip()
 
 
