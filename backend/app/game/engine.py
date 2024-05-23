@@ -40,6 +40,10 @@ logger = logging.getLogger(__name__)
 #: Marcus must not be able to strand a player in an unfinishable state.
 DOORMAN_FALLBACK_LINE = "*stares at you, says nothing, and gestures at the queue*"
 
+#: Replaces a blocked line when earlier turns are replayed into a prompt. The
+#: penalty only means something if the instruction never reaches a model.
+WITHHELD_LINE = "[withheld: the player tried to instruct the game here]"
+
 
 class GameOver(RuntimeError):
     """Raised when a player sends a message into a finished run."""
@@ -143,7 +147,7 @@ class GameEngine:
 
     def _speak(self, session: Session, message: str, verdict: Verdict) -> str:
         context = DoormanContext(
-            history=session.transcript()[-HISTORY_WINDOW_MESSAGES:],
+            history=self._prompt_transcript(session)[-HISTORY_WINDOW_MESSAGES:],
             fenced_message=injection.fence(message),
             raw_message=message,
             mood=mood_for_score(session.cumulative_score),
@@ -158,14 +162,25 @@ class GameEngine:
             logger.warning("doorman provider failed on session %s", session.session_id, exc_info=True)
             return DOORMAN_FALLBACK_LINE
 
+    @staticmethod
+    def _prompt_transcript(session: Session) -> list[dict]:
+        """The transcript as a model may see it, with blocked lines withheld."""
+        messages: list[dict] = []
+        for turn in session.turns:
+            said = WITHHELD_LINE if turn.tactic == "injection" else turn.player_message
+            messages.append({"role": "user", "content": said})
+            messages.append({"role": "assistant", "content": turn.doorman_reply})
+        return messages
+
     def _history_text(self, session: Session) -> str:
         """Render the windowed transcript for a text prompt."""
-        window = session.transcript()[-HISTORY_WINDOW_MESSAGES:]
+        transcript = self._prompt_transcript(session)
+        window = transcript[-HISTORY_WINDOW_MESSAGES:]
         if not window:
             return "[no conversation yet — this is the player's opening line]"
 
         lines = [f"{'Player' if item['role'] == 'user' else 'Marcus'}: {item['content']}" for item in window]
-        omitted = len(session.transcript()) - len(window)
+        omitted = len(transcript) - len(window)
         if omitted > 0:
             lines.insert(0, f"[...{omitted} earlier messages omitted...]")
         return "\n".join(lines)
@@ -178,4 +193,5 @@ __all__ = [
     "GameOver",
     "JudgeUnavailable",
     "TurnResult",
+    "WITHHELD_LINE",
 ]
