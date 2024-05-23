@@ -18,26 +18,21 @@ export function Door({ isOpen }) {
 
   return (
     <div className="door-container">
-      {/* Neon marquee over the entrance */}
       <div className={`club-marquee ${isOpen ? 'open' : ''}`}>
         <span className="marquee-name">BLVD</span>
         <span className="marquee-tagline">MEMBERS &amp; GUESTS</span>
       </div>
 
-      {/* Door Frame */}
       <div className="door-frame">
-        {/* Club Interior (revealed when doors open) */}
         <div className={`club-interior ${showInterior ? 'visible' : ''}`}>
-          {/* Stage Lights */}
           <div className="lights-container">
-            <div className="light-beam pink" style={{ left: '20%', transform: 'rotate(15deg)' }} />
-            <div className="light-beam cyan" style={{ left: '35%', transform: 'rotate(-10deg)', animationDelay: '0.1s' }} />
-            <div className="light-beam green" style={{ left: '50%', animationDelay: '0.2s' }} />
-            <div className="light-beam yellow" style={{ left: '65%', transform: 'rotate(10deg)', animationDelay: '0.15s' }} />
-            <div className="light-beam purple" style={{ left: '80%', transform: 'rotate(-15deg)', animationDelay: '0.25s' }} />
+            <div className="light-beam rose" style={{ left: '20%', transform: 'rotate(15deg)' }} />
+            <div className="light-beam teal" style={{ left: '35%', transform: 'rotate(-10deg)', animationDelay: '0.1s' }} />
+            <div className="light-beam mint" style={{ left: '50%', animationDelay: '0.2s' }} />
+            <div className="light-beam amber" style={{ left: '65%', transform: 'rotate(10deg)', animationDelay: '0.15s' }} />
+            <div className="light-beam brass" style={{ left: '80%', transform: 'rotate(-15deg)', animationDelay: '0.25s' }} />
           </div>
           
-          {/* Dancing Silhouettes */}
           <div className="silhouettes">
             <div className="silhouette" style={{ width: '32px', height: '80px', animationDuration: '0.5s' }} />
             <div className="silhouette" style={{ width: '40px', height: '96px', animationDuration: '0.6s', animationDelay: '0.1s' }} />
@@ -47,7 +42,6 @@ export function Door({ isOpen }) {
           </div>
         </div>
 
-        {/* Door Leaves */}
         <div className="doors">
           <div className={`door-leaf left ${isOpen ? 'open' : ''}`}>
             <div className="door-decoration">
@@ -61,11 +55,9 @@ export function Door({ isOpen }) {
           </div>
         </div>
 
-        {/* Neon frame glow */}
         <div className="door-glow" />
       </div>
 
-      {/* Velvet Rope */}
       <div className="velvet-rope">
         <div className="rope-post" />
         <div className="rope" />

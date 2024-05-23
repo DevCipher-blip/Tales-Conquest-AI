@@ -27,9 +27,11 @@ export function InfluenceMeter({ score, threshold, turnsRemaining, maxTurns, sta
       <div
         className="meter-track"
         role="progressbar"
-        aria-valuenow={score}
+        aria-label="Influence"
+        aria-valuenow={Math.max(0, Math.min(score, threshold))}
         aria-valuemin={0}
         aria-valuemax={threshold}
+        aria-valuetext={`${score} of ${threshold} influence`}
       >
         <div className={`meter-fill ${tone}`} style={{ width: `${percentage}%` }} />
         {isNegative && <div className="meter-danger" />}

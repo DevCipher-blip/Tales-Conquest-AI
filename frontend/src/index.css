@@ -1,8 +1,8 @@
 /* ============================================
-   Global Styles - Doorman Game (Cyberpunk)
+   Global styles: jazz-club noir at the velvet rope
    ============================================ */
 
-@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Rajdhani:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Karla:wght@400;500;600;700&display=swap');
 
 * {
   margin: 0;
@@ -11,25 +11,26 @@
 }
 
 :root {
-  /* Neon Colors */
-  --neon-pink: #ff2d95;
-  --neon-cyan: #00f0ff;
-  --neon-purple: #b829dd;
-  --neon-green: #39ff14;
-  --neon-yellow: #ffff00;
-  
-  /* Background Colors */
-  --deep-purple: #1a0a2e;
-  --darker-purple: #0d0518;
-  --surface: rgba(26, 10, 46, 0.9);
-  
-  /* Gold accents */
-  --gold: #b8860b;
-  --gold-light: #d4af37;
-  
-  /* Typography */
-  --font-cyber: 'Orbitron', sans-serif;
-  --font-body: 'Rajdhani', sans-serif;
+  /* Night street and the club's warm interior */
+  --ink: #0f0c0a;
+  --night: #17120e;
+  --surface: rgba(28, 22, 17, 0.92);
+
+  /* Brass fittings, velvet rope, and the player's cool counterpoint */
+  --brass: #c9a24a;
+  --brass-soft: #e3c77d;
+  --velvet: #d0505e;
+  --player: #6fb3a8;
+  --success: #7fc29b;
+
+  --text: #efe7da;
+  --muted: rgba(239, 231, 218, 0.68);
+
+  --font-display: 'DM Serif Display', Georgia, 'Times New Roman', serif;
+  --font-body: 'Karla', 'Helvetica Neue', Arial, sans-serif;
+  --font-label: var(--font-body);
+
+  color-scheme: dark;
 }
 
 html, body {
@@ -42,8 +43,8 @@ body {
   font-family: var(--font-body);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background: linear-gradient(180deg, var(--deep-purple) 0%, var(--darker-purple) 50%, var(--deep-purple) 100%);
-  color: #f5f5f5;
+  background: radial-gradient(ellipse at 50% 110%, #2a1d12 0%, var(--night) 45%, var(--ink) 100%);
+  color: var(--text);
 }
 
 #root {
@@ -51,89 +52,37 @@ body {
   width: 100%;
 }
 
-/* Selection color */
 ::selection {
-  background: rgba(0, 240, 255, 0.3);
-  color: #f5f5f5;
+  background: rgba(201, 162, 74, 0.35);
+  color: var(--text);
 }
 
-/* Focus outline */
 :focus-visible {
-  outline: 2px solid var(--neon-cyan);
+  outline: 2px solid var(--brass-soft);
   outline-offset: 2px;
 }
 
-/* Disable text selection on buttons */
 button {
   user-select: none;
 }
 
-/* Scrollbar styling */
 ::-webkit-scrollbar {
   width: 6px;
 }
 
 ::-webkit-scrollbar-track {
-  background: var(--darker-purple);
+  background: var(--ink);
 }
 
 ::-webkit-scrollbar-thumb {
-  background: var(--neon-purple);
+  background: rgba(201, 162, 74, 0.5);
   border-radius: 3px;
 }
 
-::-webkit-scrollbar-thumb:hover {
-  background: var(--neon-cyan);
-}
-
-/* Keyframe animations */
-@keyframes popIn {
-  0% {
-    transform: scale(0) translateY(20px);
-    opacity: 0;
-  }
-  100% {
-    transform: scale(1) translateY(0);
-    opacity: 1;
-  }
-}
-
-@keyframes scoreFloat {
-  0% {
-    opacity: 1;
-    transform: translateY(0) scale(1);
-  }
-  50% {
-    opacity: 1;
-    transform: translateY(-30px) scale(1.2);
-  }
-  100% {
-    opacity: 0;
-    transform: translateY(-60px) scale(0.8);
-  }
-}
-
-@keyframes partyLights {
-  0% { opacity: 0.7; }
-  100% { opacity: 1; }
-}
-
-@keyframes loadingPulse {
-  0%, 80%, 100% {
-    transform: scale(0.6);
-    opacity: 0.5;
-  }
-  40% {
-    transform: scale(1);
-    opacity: 1;
-  }
-}
-
-@keyframes bounce {
-  0%, 100% {
-    transform: translateY(0);
-  }
-  50% {
-    transform: translateY(-10px);
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
   }
 }

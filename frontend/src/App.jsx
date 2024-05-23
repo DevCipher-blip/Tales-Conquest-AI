@@ -36,7 +36,7 @@ function App() {
     <div className="app">
       <header className="app-header">
         <div className="header-left">
-          <h1 className="app-title">THE DOORMAN GAME</h1>
+          <h1 className="app-title">The Doorman Game</h1>
           <p className="app-subtitle">BLVD DUBAI &middot; FRIDAY, 23:40</p>
         </div>
 
@@ -63,8 +63,14 @@ function App() {
               {provider.offline ? 'LOCAL' : provider.provider.toUpperCase()}
             </span>
           )}
-          <button className="icon-btn" onClick={playAgain} title="Start over" type="button">
-            &#8635;
+          <button
+            className="icon-btn"
+            onClick={playAgain}
+            title="Start over"
+            aria-label="Start a new run"
+            type="button"
+          >
+            <span aria-hidden="true">&#8635;</span>
           </button>
         </div>
       </header>
@@ -87,8 +93,13 @@ function App() {
       {error && (
         <div className="error-banner" role="alert">
           <span>{error}</span>
-          <button className="error-dismiss" onClick={dismissError} type="button">
-            &times;
+          <button
+            className="error-dismiss"
+            onClick={dismissError}
+            aria-label="Dismiss message"
+            type="button"
+          >
+            <span aria-hidden="true">&times;</span>
           </button>
         </div>
       )}

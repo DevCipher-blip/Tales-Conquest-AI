@@ -71,6 +71,11 @@ describe('EndScreen', () => {
     expect(screen.getByText('-12')).toBeInTheDocument();
   });
 
+  it('moves keyboard focus onto the way back in', () => {
+    renderEnd({ status: STATUS.TURNS_EXHAUSTED, score: 71 });
+    expect(screen.getByRole('button', { name: 'Try again' })).toHaveFocus();
+  });
+
   it('offers a way back to a fresh run', async () => {
     const onPlayAgain = vi.fn();
     renderEnd({ onPlayAgain });

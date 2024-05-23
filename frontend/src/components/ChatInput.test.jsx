@@ -16,6 +16,11 @@ const renderInput = (props = {}) =>
   );
 
 describe('ChatInput', () => {
+  it('gives the icon-only send button a name', () => {
+    renderInput();
+    expect(screen.getByRole('button', { name: 'Say it' })).toBeInTheDocument();
+  });
+
   it('sends the trimmed line and clears itself', async () => {
     const onSend = vi.fn();
     renderInput({ onSend });

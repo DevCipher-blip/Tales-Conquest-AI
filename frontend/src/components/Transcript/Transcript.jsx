@@ -27,7 +27,7 @@ export function Transcript({ messages, isThinking, turnsUsed, maxTurns }) {
         )}
       </header>
 
-      <div className="transcript-body">
+      <div className="transcript-body" role="log" aria-live="polite">
         {messages.length === 0 && !isThinking ? (
           <div className="transcript-empty">
             <p className="transcript-empty-title">Marcus has not looked up yet.</p>

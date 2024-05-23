@@ -21,24 +21,29 @@
   align-items: flex-end;
 }
 
-/* Responsive adjustments */
-@media (max-width: 900px) {
-  .stage-content {
-    gap: 8px;
-  }
+@media (max-width: 1100px) {
+  .stage { padding: 12px 0; }
+  .stage-content { gap: 8px; }
+  .stage .bubble-container { display: none; }
+  .stage .character-svg { width: 110px; }
+  .stage .character-svg.doorman { width: 120px; }
+  .stage .door-frame { width: 190px; height: 230px; }
+  .stage .club-marquee { margin-bottom: 14px; padding: 10px 24px 8px; }
+  .stage .marquee-name { font-size: 1.6rem; }
 }
 
 @media (max-width: 600px) {
-  .stage-content {
-    grid-template-columns: 1fr;
-    grid-template-rows: auto auto auto;
-    gap: 16px;
-  }
-  
-  .stage-content > *:nth-child(1) { order: 1; } /* Player */
-  .stage-content > *:nth-child(2) { order: 3; } /* Door */
-  .stage-content > *:nth-child(3) { order: 2; } /* Doorman */
+  .stage { padding: 8px 0 6px; }
+  .stage-content { padding: 0 8px; gap: 4px; }
+  .stage .character-svg { width: 70px; }
+  .stage .character-svg.doorman { width: 76px; }
+  .stage .character-name { font-size: 0.62rem; letter-spacing: 0.12em; }
+  .stage .door-frame { width: 116px; height: 140px; border-width: 3px; }
+  .stage .door-decoration { width: 30px; height: 80px; }
+  .stage .door-decoration-inner { width: 18px; height: 54px; }
+  .stage .club-marquee { margin-bottom: 8px; padding: 6px 14px 5px; }
+  .stage .marquee-name { font-size: 1.1rem; }
+  .stage .marquee-tagline { display: none; }
+  .stage .rope { width: 60px; height: 6px; }
+  .stage .rope-post { width: 8px; height: 36px; }
 }
-
-/* Index exports */
-

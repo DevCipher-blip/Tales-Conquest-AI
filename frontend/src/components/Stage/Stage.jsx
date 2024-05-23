@@ -3,36 +3,19 @@ import { Door } from './Door';
 import { CharacterColumn } from './CharacterColumn';
 import './Stage.css';
 
-export function Stage({ 
-  playerMessage, 
-  doormanMessage, 
-  isLoading, 
-  isOpen 
-}) {
+/**
+ * The street scene. It repeats the latest line from each side, so it is
+ * hidden from assistive technology: the transcript is the accessible record.
+ */
+export function Stage({ playerMessage, doormanMessage, isLoading, isOpen }) {
   return (
-    <div className="stage">
-      {/* Background */}
+    <div className="stage" aria-hidden="true">
       <Skyline />
-      
-      {/* Three Column Layout */}
       <div className="stage-content">
-        {/* Left: Player */}
-        <CharacterColumn 
-          type="player" 
-          message={playerMessage}
-        />
-        
-        {/* Center: Door */}
+        <CharacterColumn type="player" message={playerMessage} />
         <Door isOpen={isOpen} />
-        
-        {/* Right: Doorman */}
-        <CharacterColumn 
-          type="doorman" 
-          message={doormanMessage}
-          isLoading={isLoading}
-        />
+        <CharacterColumn type="doorman" message={doormanMessage} isLoading={isLoading} />
       </div>
     </div>
   );
 }
-

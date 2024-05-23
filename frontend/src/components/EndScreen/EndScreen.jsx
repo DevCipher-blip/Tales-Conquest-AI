@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 import { outcomeFor } from './outcomes';
 import { playFanfare } from './fanfare';
 import './EndScreen.css';
@@ -14,17 +14,25 @@ const sign = (value) => (value > 0 ? `+${value}` : `${value}`);
  */
 export function EndScreen({ status, score, threshold, debrief, onPlayAgain }) {
   const outcome = outcomeFor(status);
+  const actionRef = useRef(null);
 
   useEffect(() => {
     if (!outcome) return undefined;
-    const stop = playFanfare(outcome.tone);
-    return stop;
+    // The chat input is disabled behind the overlay, so keyboard focus would
+    // otherwise be stranded on the page underneath.
+    actionRef.current?.focus();
+    return playFanfare(outcome.tone);
   }, [outcome]);
 
   if (!outcome) return null;
 
   return (
-    <div className={`end-overlay ${outcome.tone}`} role="dialog" aria-label={outcome.title}>
+    <div
+      className={`end-overlay ${outcome.tone}`}
+      role="dialog"
+      aria-modal="true"
+      aria-label={outcome.title}
+    >
       <div className="end-card">
         <p className="end-subtitle">{outcome.subtitle}</p>
         <h1 className="end-title">{outcome.title}</h1>
@@ -33,6 +41,10 @@ export function EndScreen({ status, score, threshold, debrief, onPlayAgain }) {
         <p className="end-score">
           <strong>{score}</strong> <span>/ {threshold} influence</span>
         </p>
+
+        <button className="end-button" onClick={onPlayAgain} type="button" ref={actionRef}>
+          {outcome.cta}
+        </button>
 
         {debrief && (
           <section className="end-debrief">
@@ -53,10 +65,6 @@ export function EndScreen({ status, score, threshold, debrief, onPlayAgain }) {
             </ol>
           </section>
         )}
-
-        <button className="end-button" onClick={onPlayAgain} type="button">
-          {outcome.cta}
-        </button>
       </div>
     </div>
   );

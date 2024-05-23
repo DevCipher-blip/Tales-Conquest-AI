@@ -35,15 +35,22 @@ export function ChatInput({ onSend, isLoading, disabled, status }) {
         autoFocus
         aria-label="What do you say to the doorman?"
       />
-      <button type="submit" className="send-button" disabled={locked || !message.trim()}>
+      <button
+        type="submit"
+        className="send-button"
+        disabled={locked || !message.trim()}
+        aria-label="Say it"
+      >
         {isLoading ? (
-          <span className="loading-dots">
+          <span className="loading-dots" aria-hidden="true">
             <span className="dot" />
             <span className="dot" />
             <span className="dot" />
           </span>
         ) : (
-          <span className="send-icon">&#10148;</span>
+          <span className="send-icon" aria-hidden="true">
+            &#10148;
+          </span>
         )}
       </button>
     </form>

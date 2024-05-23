@@ -8,34 +8,34 @@
 
 .message-bubble.player {
   align-self: flex-end;
-  background: rgba(0, 240, 255, 0.08);
-  border-color: rgba(0, 240, 255, 0.26);
+  background: rgba(111, 179, 168, 0.08);
+  border-color: rgba(111, 179, 168, 0.26);
   margin-left: 28px;
 }
 
 .message-bubble.doorman {
   align-self: flex-start;
-  background: rgba(184, 41, 221, 0.09);
-  border-color: rgba(184, 41, 221, 0.28);
+  background: rgba(201, 162, 74, 0.08);
+  border-color: rgba(201, 162, 74, 0.3);
   margin-right: 28px;
 }
 
 .message-sender {
-  font-family: var(--font-cyber);
-  font-size: 0.55rem;
+  font-family: var(--font-label);
+  font-size: 0.66rem;
   font-weight: 700;
-  letter-spacing: 0.26em;
+  letter-spacing: 0.22em;
   margin-bottom: 6px;
 }
 
-.message-bubble.player .message-sender { color: var(--neon-cyan); }
-.message-bubble.doorman .message-sender { color: var(--neon-purple); }
+.message-bubble.player .message-sender { color: var(--player); }
+.message-bubble.doorman .message-sender { color: var(--brass-soft); }
 
 .message-text {
   margin: 0;
-  font-size: 0.9rem;
+  font-size: 0.95rem;
   line-height: 1.55;
-  color: rgba(255, 255, 255, 0.9);
+  color: var(--text);
   white-space: pre-wrap;
   overflow-wrap: anywhere;
 }

@@ -32,6 +32,13 @@ describe('InfluenceMeter', () => {
     expect(container.querySelector('.meter-fill')).toHaveStyle({ width: '100%' });
   });
 
+  it('keeps the progressbar value in range and reads out the real score', () => {
+    renderMeter({ score: -20 });
+    const bar = screen.getByRole('progressbar', { name: 'Influence' });
+    expect(bar).toHaveAttribute('aria-valuenow', '0');
+    expect(bar).toHaveAttribute('aria-valuetext', '-20 of 100 influence');
+  });
+
   it('marks the bar as dangerous below zero', () => {
     const { container } = renderMeter({ score: -20 });
     expect(container.querySelector('.meter-danger')).toBeInTheDocument();

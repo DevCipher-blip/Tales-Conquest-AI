@@ -12,41 +12,41 @@
 }
 
 .meter-title {
-  font-family: var(--font-cyber);
-  font-size: 0.625rem;
+  font-family: var(--font-label);
+  font-size: 0.7rem;
   font-weight: 700;
-  letter-spacing: 0.3em;
-  color: rgba(255, 255, 255, 0.6);
+  letter-spacing: 0.26em;
+  color: var(--muted);
   margin: 0;
 }
 
 .meter-value {
-  font-family: var(--font-cyber);
-  font-size: 0.7rem;
+  font-family: var(--font-label);
+  font-size: 0.85rem;
   font-weight: 700;
-  color: var(--neon-cyan);
-  text-shadow: 0 0 12px rgba(0, 240, 255, 0.5);
+  font-variant-numeric: tabular-nums;
+  color: var(--brass-soft);
 }
 
 .meter-turns {
   margin-left: auto;
-  font-family: var(--font-cyber);
-  font-size: 0.6rem;
-  letter-spacing: 0.18em;
-  color: rgba(255, 255, 255, 0.45);
+  font-family: var(--font-label);
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  color: var(--muted);
 }
 
 .meter-turns.urgent {
-  color: var(--neon-pink);
-  text-shadow: 0 0 12px rgba(255, 45, 149, 0.5);
+  color: var(--velvet);
 }
 
 .meter-track {
   position: relative;
   height: 12px;
   border-radius: 999px;
-  background: rgba(255, 255, 255, 0.07);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(201, 162, 74, 0.25);
   overflow: hidden;
 }
 
@@ -57,13 +57,11 @@
 }
 
 .meter-fill.positive {
-  background: linear-gradient(90deg, var(--neon-cyan), var(--neon-purple));
-  box-shadow: 0 0 18px rgba(0, 240, 255, 0.45);
+  background: var(--brass);
 }
 
 .meter-fill.granted {
-  background: linear-gradient(90deg, var(--neon-green), var(--neon-cyan));
-  box-shadow: 0 0 24px rgba(57, 255, 20, 0.55);
+  background: var(--success);
 }
 
 .meter-fill.negative { background: transparent; }
@@ -73,7 +71,7 @@
   inset: 0;
   background: repeating-linear-gradient(
     -45deg,
-    rgba(255, 45, 149, 0.45) 0 6px,
+    rgba(196, 58, 74, 0.45) 0 6px,
     transparent 6px 12px
   );
 }
